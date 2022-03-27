@@ -3,8 +3,7 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
-from __future__ import unicode_literals
-from __future__ import absolute_import
+
 
 import time
 import os
@@ -18,7 +17,7 @@ from resources.lib import Trakt
 from resources.lib import LastFM
 from resources.lib import TheAudioDB as AudioDB
 from resources.lib import TheMovieDB as tmdb
-from resources.lib.WindowManager import wm
+from .WindowManager import wm
 
 from kodi65 import youtube
 from kodi65 import local_db
@@ -65,7 +64,10 @@ def start_info_actions(info, params):
     elif info == 'starredmovies':
         return tmdb.get_fav_items("movies")
     elif info == 'accountlists':
-        return tmdb.handle_lists(tmdb.get_account_lists())
+        account_lists = tmdb.handle_lists(tmdb.get_account_lists())
+        for item in account_lists:
+            item.set_property("directory", True)
+        return account_lists
     elif info == 'listmovies':
         return tmdb.get_movies_from_list(params["id"])
     elif info == 'airingtodaytvshows':
@@ -218,14 +220,16 @@ def start_info_actions(info, params):
             addon.set_global('%sSummary' % params.get("prefix", ""), track_info["summary"])
     elif info == 'topartistsnearevents':
         artists = local_db.get_artists()
-        import BandsInTown
+        from . import BandsInTown
         return BandsInTown.get_near_events(artists[0:49])
     elif info == 'youtubesearchvideos':
         addon.set_global('%sSearchValue' % params.get("prefix", ""), params.get("id", ""))
+        user_key = addon.setting("Youtube API Key")
         if params.get("id"):
             return youtube.search(search_str=params.get("id", ""),
                                   hd=params.get("hd"),
-                                  orderby=params.get("orderby", "relevance"))
+                                  orderby=params.get("orderby", "relevance"),
+                                  api_key=user_key)
     elif info == 'youtubeplaylistvideos':
         return youtube.get_playlist_videos(params.get("id", ""))
     elif info == 'youtubeusersearchvideos':

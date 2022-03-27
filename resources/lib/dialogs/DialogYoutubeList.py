@@ -94,7 +94,7 @@ def get_window(window_type):
             if media_type == "channel":
                 filter_ = [{"id": youtube_id,
                             "type": "channelId",
-                            "label": listitem.getLabel().decode("utf-8")}]
+                            "label": listitem.getLabel()}]
                 wm.open_youtube_list(filters=filter_)
             else:
                 wm.play_youtube_video(youtube_id=youtube_id,
@@ -214,12 +214,14 @@ def get_window(window_type):
             self.set_filter_label()
             if self.search_str:
                 self.filter_label = addon.LANG(32146) % (self.search_str) + "  " + self.filter_label
+            user_key = addon.setting("Youtube API Key")
             return youtube.search(search_str=self.search_str,
                                   orderby=self.sort,
                                   extended=True,
                                   filters={item["type"]: item["id"] for item in self.filters},
                                   media_type=self.type,
-                                  page=self.page_token)
+                                  page=self.page_token,
+                                  api_key=user_key)
 
     return DialogYoutubeList
 
@@ -229,7 +231,7 @@ def open(self, search_str="", filters=None, sort="relevance", filter_label="", m
     open video list, deal with window stack
     """
     YouTube = get_window(windows.DialogXML)
-    dialog = YouTube(u'script-%s-YoutubeList.xml' % addon.NAME, addon.PATH,
+    dialog = YouTube('script-%s-YoutubeList.xml' % addon.NAME, addon.PATH,
                      search_str=search_str,
                      filters=[] if not filters else filters,
                      filter_label=filter_label,

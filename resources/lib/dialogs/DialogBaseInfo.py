@@ -3,9 +3,6 @@
 # Copyright (C) 2015 - Philipp Temminghoff <phil65@kodi.tv>
 # This program is Free Software see LICENSE file for details
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import xbmc
 import xbmcgui
 
@@ -211,7 +208,7 @@ class DialogBaseInfo(windows.DialogXML):
         if index == 1:
             filters = [{"id": listitem.getProperty("id"),
                         "type": "with_people",
-                        "label": listitem.getLabel().decode("utf-8")}]
+                        "label": listitem.getLabel()}]
             wm.open_video_list(filters=filters)
         if index == 2:
             self.open_credit_dialog(credit_id)
@@ -259,7 +256,8 @@ class DialogBaseInfo(windows.DialogXML):
         except Exception:
             return None
         if not self.yt_listitems:
-            self.yt_listitems = youtube.search(search_str, limit=15)
+            user_key = addon.setting("Youtube API Key")
+            self.yt_listitems = youtube.search(search_str, limit=15, api_key=user_key)
         if not self.yt_listitems:
             return None
         vid_ids = [item.get_property("key") for item in self.lists["videos"]] if "videos" in self.lists else []

@@ -14,7 +14,7 @@ from kodi65 import addon
 from kodi65 import utils
 from kodi65 import ActionHandler
 
-from DialogVideoInfo import DialogVideoInfo
+from .DialogVideoInfo import DialogVideoInfo
 
 ID_LIST_SIMILAR = 150
 ID_LIST_SEASONS = 250
@@ -94,21 +94,21 @@ class DialogTVShowInfo(DialogVideoInfo):
     def open_company_info(self, control_id):
         filters = [{"id": self.FocusedItem(control_id).getProperty("id"),
                     "type": "with_companies",
-                    "label": self.FocusedItem(control_id).getLabel().decode("utf-8")}]
+                    "label": self.FocusedItem(control_id).getLabel()}]
         wm.open_video_list(filters=filters)
 
     @ch.click(ID_LIST_KEYWORDS)
     def open_keyword_info(self, control_id):
         filters = [{"id": self.FocusedItem(control_id).getProperty("id"),
                     "type": "with_keywords",
-                    "label": self.FocusedItem(control_id).getLabel().decode("utf-8")}]
+                    "label": self.FocusedItem(control_id).getLabel()}]
         wm.open_video_list(filters=filters)
 
     @ch.click(ID_LIST_GENRES)
     def open_genre_info(self, control_id):
         filters = [{"id": self.FocusedItem(control_id).getProperty("id"),
                     "type": "with_genres",
-                    "label": self.FocusedItem(control_id).getLabel().decode("utf-8")}]
+                    "label": self.FocusedItem(control_id).getLabel()}]
         wm.open_video_list(filters=filters,
                            media_type="tv")
 
@@ -116,14 +116,14 @@ class DialogTVShowInfo(DialogVideoInfo):
     def open_network_info(self, control_id):
         filters = [{"id": self.FocusedItem(control_id).getProperty("id"),
                     "type": "with_networks",
-                    "label": self.FocusedItem(control_id).getLabel().decode("utf-8")}]
+                    "label": self.FocusedItem(control_id).getLabel()}]
         wm.open_video_list(filters=filters,
                            media_type="tv")
 
     def get_manage_options(self):
         options = []
+        title = self.info.get_info("tvshowtitle")
         dbid = self.info.get_info("dbid")
-        tvdb_id = self.info.get_property("tvdb_id")
         if dbid:
             call = "RunScript(script.artwork.downloader,mediatype=tv,dbid={}%s)".format(dbid)
             options += [(addon.LANG(413), call % (",mode=gui")),
@@ -131,7 +131,7 @@ class DialogTVShowInfo(DialogVideoInfo):
                         (addon.LANG(32101), call % (",mode=custom,extrathumbs")),
                         (addon.LANG(32100), call % (",mode=custom"))]
         else:
-            options += [(addon.LANG(32166), "RunPlugin(plugin://plugin.video.sickrage?action=addshow&show_id=%s)" % tvdb_id)]
+            options += [(addon.LANG(32166), "RunPlugin(plugin://plugin.video.sickrage?action=addshow&show_name=%s)" % title)]
         options.append((addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options
 

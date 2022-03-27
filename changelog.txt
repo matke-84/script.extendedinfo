@@ -1,3 +1,9 @@
+V5.6.2
+- Bug fixes
+
+V5.6.1
+- Added support for Kodi Matrix
+
 v5.6.0
 - Fix support for Kodi L* nightlies
 - Browser window improvements
