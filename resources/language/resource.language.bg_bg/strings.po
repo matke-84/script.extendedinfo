@@ -488,7 +488,7 @@ msgid "Crew"
 msgstr "Екип"
 
 msgctxt "#32116"
-msgid "Recommended By TMDB"
+msgid "Recommended by TMDB"
 msgstr "Препоръчан от TMDB"
 
 msgctxt "#32117"

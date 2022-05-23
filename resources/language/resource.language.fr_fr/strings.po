@@ -536,7 +536,7 @@ msgid "Crew"
 msgstr "Équipe"
 
 msgctxt "#32116"
-msgid "Recommended By TMDB"
+msgid "Recommended by TMDB"
 msgstr "Recommandé par TMDB"
 
 msgctxt "#32117"

@@ -79,9 +79,16 @@ class DialogTVShowInfo(DialogVideoInfo):
 
     @ch.click(ID_BUTTON_BROWSE)
     def browse_tvshow(self, control_id):
-        self.exit()
-        xbmc.executebuiltin("Dialog.Close(all)")
-        xbmc.executebuiltin("ActivateWindow(videos,videodb://tvshows/titles/%s/)" % self.info.get_info("dbid"))
+            dbid = self.info.get_info("dbid")
+            if dbid:
+                self.exit()
+                xbmc.executebuiltin("Dialog.Close(all)")
+                xbmc.executebuiltin("ActivateWindow(videos,videodb://tvshows/titles/%s/)" % self.info.get_info("dbid"))
+            else:
+                self.exit()
+                url = 'plugin://plugin.video.themoviedb.helper/?info=seasons&amp;tmdb_id='+ str(self.info['id']) +'&amp;tmdb_type=tv'
+                xbmc.executebuiltin("Dialog.Close(all)")
+                xbmc.executebuiltin('ActivateWindow(videos,%s,return)' % url)
 
     @ch.click(ID_LIST_SEASONS)
     def open_season_dialog(self, control_id):
@@ -124,14 +131,6 @@ class DialogTVShowInfo(DialogVideoInfo):
         options = []
         title = self.info.get_info("tvshowtitle")
         dbid = self.info.get_info("dbid")
-        if dbid:
-            call = "RunScript(script.artwork.downloader,mediatype=tv,dbid={}%s)".format(dbid)
-            options += [(addon.LANG(413), call % (",mode=gui")),
-                        (addon.LANG(14061), call % ("")),
-                        (addon.LANG(32101), call % (",mode=custom,extrathumbs")),
-                        (addon.LANG(32100), call % (",mode=custom"))]
-        else:
-            options += [(addon.LANG(32166), "RunPlugin(plugin://plugin.video.sickrage?action=addshow&show_name=%s)" % title)]
         options.append((addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options
 
