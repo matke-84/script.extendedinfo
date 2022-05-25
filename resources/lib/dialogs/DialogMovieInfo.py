@@ -222,7 +222,8 @@ class DialogMovieInfo(DialogVideoInfo):
     def get_manage_options(self):
         options = []
         movie_id = self.info.get_info("dbid")
-        imdb_id = self.info.get_property("imdb_id")
+        if movie_id:
+            options.append(("Artwork dump", "Addon.OpenSettings(script.artwork.dump)"))
         options.append((addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options
 

@@ -129,8 +129,9 @@ class DialogTVShowInfo(DialogVideoInfo):
 
     def get_manage_options(self):
         options = []
-        title = self.info.get_info("tvshowtitle")
         dbid = self.info.get_info("dbid")
+        if dbid:
+            options.append(("Artwork dump", "Addon.OpenSettings(script.artwork.dump)"))
         options.append((addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options
 
