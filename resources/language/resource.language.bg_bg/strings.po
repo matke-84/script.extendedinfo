@@ -359,8 +359,8 @@ msgstr ""
 
 #: \resources\lib\TheMovieDB.py:872
 msgctxt "#32073"
-msgid "In production"
-msgstr "В процес на заснемане"
+msgid "Upcoming"
+msgstr ""
 
 #: \resources\lib\TheMovieDB.py:873
 msgctxt "#32074"
@@ -369,7 +369,7 @@ msgstr "Приключил"
 
 #: \resources\lib\TheMovieDB.py:874
 msgctxt "#32075"
-msgid "Returning series"
+msgid "Returning"
 msgstr ""
 
 #: \resources\lib\TheMovieDB.py:875

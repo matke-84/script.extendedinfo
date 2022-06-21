@@ -224,6 +224,7 @@ class DialogMovieInfo(DialogVideoInfo):
         movie_id = self.info.get_info("dbid")
         if movie_id:
             options.append(("Artwork dump", "Addon.OpenSettings(script.artwork.dump)"))
+            options.append(("Artwork beef", "Addon.OpenSettings(script.artwork.beef)"))
         options.append((addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options
 

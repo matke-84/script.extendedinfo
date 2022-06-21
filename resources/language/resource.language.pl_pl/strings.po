@@ -358,8 +358,8 @@ msgstr "W trakcie montażu"
 
 #: \resources\lib\TheMovieDB.py:872
 msgctxt "#32073"
-msgid "In production"
-msgstr "W produkcji"
+msgid "Upcoming"
+msgstr ""
 
 #: \resources\lib\TheMovieDB.py:873
 msgctxt "#32074"
@@ -368,8 +368,8 @@ msgstr "Zakończony"
 
 #: \resources\lib\TheMovieDB.py:874
 msgctxt "#32075"
-msgid "Returning series"
-msgstr "Seriale powracające na antenę"
+msgid "Returning"
+msgstr ""
 
 #: \resources\lib\TheMovieDB.py:875
 msgctxt "#32076"
