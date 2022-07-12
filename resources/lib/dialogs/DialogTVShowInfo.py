@@ -83,7 +83,7 @@ class DialogTVShowInfo(DialogVideoInfo):
             if dbid:
                 self.exit()
                 xbmc.executebuiltin("Dialog.Close(all)")
-                xbmc.executebuiltin("ActivateWindow(videos,videodb://tvshows/titles/%s/)" % self.info.get_info("dbid"))
+                xbmc.executebuiltin("ActivateWindow(videos,videodb://tvshows/titles/%s/-2/,return)" % self.info.get_info("dbid"))
             else:
                 self.exit()
                 url = 'plugin://plugin.video.themoviedb.helper/?info=seasons&amp;tmdb_id='+ str(self.info['id']) +'&amp;tmdb_type=tv'
