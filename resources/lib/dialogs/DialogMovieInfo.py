@@ -7,6 +7,7 @@ import threading
 
 import xbmc
 import xbmcgui
+import os 
 
 from resources.lib import TheMovieDB as tmdb
 from resources.lib import omdb
@@ -45,6 +46,8 @@ ID_BUTTON_RATED = 6006
 
 ch = ActionHandler()
 
+dirname1 = "special://home/addons/script.artwork.dump/"
+dirname2 = "special://home/addons/script.artwork.beef/"
 
 class DialogMovieInfo(DialogVideoInfo):
     TYPE = "Movie"
@@ -221,9 +224,9 @@ class DialogMovieInfo(DialogVideoInfo):
 
     def get_manage_options(self):
         options = []
-        movie_id = self.info.get_info("dbid")
-        if movie_id:
+        if os.path.exists(xbmc.translatePath(dirname1)):
             options.append(("Artwork dump", "Addon.OpenSettings(script.artwork.dump)"))
+        if os.path.exists(xbmc.translatePath(dirname2)):
             options.append(("Artwork beef", "Addon.OpenSettings(script.artwork.beef)"))
         options.append((addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options

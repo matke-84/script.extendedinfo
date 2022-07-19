@@ -5,6 +5,7 @@
 
 import xbmc
 import xbmcgui
+import os         
 
 from resources.lib import TheMovieDB as tmdb
 from resources.lib.WindowManager import wm
@@ -35,6 +36,8 @@ ID_BUTTON_RATED = 6006
 
 ch = ActionHandler()
 
+dirname1 = "special://home/addons/script.artwork.dump/"
+dirname2 = "special://home/addons/script.artwork.beef/"
 
 class DialogTVShowInfo(DialogVideoInfo):
     TYPE = "TVShow"
@@ -83,7 +86,7 @@ class DialogTVShowInfo(DialogVideoInfo):
             if dbid:
                 self.exit()
                 xbmc.executebuiltin("Dialog.Close(all)")
-                xbmc.executebuiltin("ActivateWindow(videos,videodb://tvshows/titles/%s/-2/,return)" % self.info.get_info("dbid"))
+                xbmc.executebuiltin("ActivateWindow(videos,videodb://tvshows/titles/%s/,return)" % self.info.get_info("dbid"))
             else:
                 self.exit()
                 url = 'plugin://plugin.video.themoviedb.helper/?info=seasons&amp;tmdb_id='+ str(self.info['id']) +'&amp;tmdb_type=tv'
@@ -129,9 +132,9 @@ class DialogTVShowInfo(DialogVideoInfo):
 
     def get_manage_options(self):
         options = []
-        dbid = self.info.get_info("dbid")
-        if dbid:
+        if os.path.exists(xbmc.translatePath(dirname1)):
             options.append(("Artwork dump", "Addon.OpenSettings(script.artwork.dump)"))
+        if os.path.exists(xbmc.translatePath(dirname2)):
             options.append(("Artwork beef", "Addon.OpenSettings(script.artwork.beef)"))
         options.append((addon.LANG(1049), "Addon.OpenSettings(script.extendedinfo)"))
         return options
